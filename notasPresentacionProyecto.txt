@@ -1,0 +1,28 @@
+/////////////////////////////DE CARA A LA PRESENTACIÓN////////////////////////////////////////////
+(Rubén)
+*En bd.php:
+-> En "function obtenerCategorias(): array", "$resultado -> free();" libera la memoria asociada al resultado de la consulta.
+query() devuelve un objeto mysqli_result el cual contiene todas las filas devueltas y 
+free() libera esa memoria cuando ya no la necesitamos.
+
+-> En "function obtenerProductoPorCodigo(int $codProd): ?array" el ? delante de array
+significa tipo anulable, la función puede devolver un array o null si no existe ningún
+producto con el código introducido.
+
+-> En "function insertarPedido(int $codRestaurante, float $precioTotal, array $carrito): int",
+"$conexion -> begin_transaction();" realiza una transcción de base de datos, es decir, todo lo que se haga
+después de un INSERT, UPDATE O DELETE queda pendiente hasta que se llame a "commit()" (se guardan los cambios)
+o a "rollback()" (se deshacen todos los cambios desde el begin_transaction()). Conclusión: O se hacen
+todas las operaciones o no se hace ninguna. Si alguna línea falla, hacemos "rollback()" para no dejar la bd a medias.
+
+En "$conexion -> commit();" se guardan todos los cambios confirmándose la transcción iniciada con begin_transaction().
+Después de esta línea, los cambios ya son visibles para otras conexiones.
+
+En "$conexion -> rollback();" deshacemos la transacción revirtiendo todos los cambios hechos desde begin_transaction() en caso de
+algún error y la bd queda como si no se hubiera hecho nada.
+
+MATÍAS Y ADRIÁN, usar en login.php esto "$_SESSION['codRes'] = $codResDelRestaurante;" para que funcione procesar_pedido.php.
+
+(Matías)
+
+(Adrián)
