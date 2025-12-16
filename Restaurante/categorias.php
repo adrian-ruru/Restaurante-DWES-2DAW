@@ -6,7 +6,8 @@
     require_once 'bd.php';
 
     //opcional: include 'sesiones.php'; comprobar_sesion();
-    //opcional: include 'cabecera.php';
+    //opcional: 
+    include 'cabecera.php';
 
     $categorias= obtenerCategorias();
 ?>

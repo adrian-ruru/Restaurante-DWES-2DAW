@@ -42,6 +42,8 @@
 
     //Guardamos el peso total en la sesión para usarlo en procesar_pedido.php
     $_SESSION["peso_total"]= $pesoTotal;
+
+    include 'cabecera.php';
 ?>
 
 <!DOCTYPE html>
