@@ -21,8 +21,6 @@ Después de esta línea, los cambios ya son visibles para otras conexiones.
 En "$conexion -> rollback();" deshacemos la transacción revirtiendo todos los cambios hechos desde begin_transaction() en caso de
 algún error y la bd queda como si no se hubiera hecho nada.
 
-MATÍAS Y ADRIÁN, usar en login.php esto "$_SESSION['codRes'] = $codResDelRestaurante;" para que funcione procesar_pedido.php.
-
 (Matías)
 
 (Adrián)

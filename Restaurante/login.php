@@ -1,110 +1,78 @@
 <?php
-
+    //Activamos la sesión
     session_start();
+
+    //Importamos las funciones de la base de datos
     require_once 'bd.php';
 
-    // Si ya hay sesión iniciada, redirigimos
-    if (isset($_SESSION["codRes"])) {
-
+    //Si ya hay sesión iniciada, redirigimos
+    if(isset($_SESSION["codRes"])) {
         header("Location: categorias.php");
         exit;
-
     }
 
-    $error = "";
+    $error= "";
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    //Comprobamos si el formulario ha sido enviado
+    if($_SERVER["REQUEST_METHOD"] === "POST") {
+        //Recuperamos y limpiamos los datos del formulario
+        $correo= trim($_POST["correo"] ?? "");
+        $clave= trim($_POST["clave"] ?? "");
 
-        $correo = trim($_POST["correo"] ?? "");
-        $clave  = trim($_POST["clave"] ?? "");
+        //Validamos que los campos no estén vacíos
+        if($correo === "" || $clave === "") {
+            $error= "Debes rellenar todos los campos.";
+        }else{
+            //Buscamos el restaurante por correo
+            $restaurante= obtenerRestaurantePorCorreo($correo);
+            
+            if($restaurante){
+                //Comprobamos la contraseña
+                if($clave === $restaurante["clave"]){
+                    //Iniciamos sesión
+                    $_SESSION["codRes"]= (int)$restaurante["codRes"];
+                    $_SESSION["correo"]= $restaurante["correo"];
 
-        if ($correo === "" || $clave === "") {
-
-            $error = "Debes rellenar todos los campos.";
-
-        } else {
-
-            $conexion = conectarBD();
-
-            $sql = "SELECT codRes, clave FROM restaurantes WHERE correo = ?";
-            if ($stmt = $conexion->prepare($sql)) {
-
-                $stmt->bind_param("s", $correo);
-                $stmt->execute();
-                $resultado = $stmt->get_result();
-
-                if ($fila = $resultado->fetch_assoc()) {
-
-                    // Comprobamos la contraseña
-                    if (password_verify($clave, $fila["clave"]) || $clave === $fila["clave"]) {
-                        // INICIAMOS SESIÓN
-                        $_SESSION["codRes"] = $fila["codRes"];
-                        $_SESSION["correo"] = $correo;
-
-                        header("Location: categorias.php");
-                        exit;
-                    } else {
-                        $error = "Contraseña incorrecta.";
-                    }
-
-                } else {
-
-                    $error = "No existe ningún restaurante con ese correo.";
-
+                    header("Location: categorias.php");
+                    exit;
+                }else{
+                    $error= "Contraseña incorrecta.";
                 }
-
-                $stmt->close();
-
+            }else{
+                $error= "No existe ningún restaurante con ese correo.";
             }
-
-            $conexion->close();
-
         }
-
     }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
     <head>
-
         <meta charset="UTF-8">
         <title>Login</title>
-
     </head>
 
     <body>
-
         <h1>Iniciar sesión</h1>
 
-        <?php if ($error !== "") { ?>
-
+        <?php if($error !== "") { ?>
             <p style="color:red"><?= htmlspecialchars($error) ?></p>
-
         <?php } ?>
 
         <form method="post">
-
             <label>
-
                 Correo:
                 <input type="email" name="correo" required>
-
             </label><br><br>
 
             <label>
-
                 Contraseña:
-                <input type="password" name="clave" required>
-                
-            </label><br><br>
+                <input type="password" name="clave" required>            
+            </label>
+            
+            <br><br>
 
             <input type="submit" value="Entrar">
-
         </form>
-
     </body>
-
 </html>

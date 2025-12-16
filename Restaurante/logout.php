@@ -1,7 +1,9 @@
 <?php
 
-session_start();
-session_destroy();
+    //Activamos y cerramos la sesión
+    session_start();
+    session_destroy();
 
-header("Location: login.php");
-exit;
+    header("Location: login.php");
+    exit;
+?>

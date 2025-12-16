@@ -2,6 +2,10 @@
     //Activamos la sesión
     session_start();
 
+    //Importamos las funciones de 'sesiones.php'
+    require_once 'sesiones.php';
+    comprobar_sesion();
+
     //Importamos las funciones de la base de datos
     require_once 'bd.php';
 
@@ -66,7 +70,7 @@
                 $exito= true;
             }catch(Exception $e){
                 $mensaje= "Ha ocurrido un error al procesar el pedido: " . $e -> getMessage();
-                $exito= true;
+                $exito= false;
             }
         }
     }
@@ -80,6 +84,8 @@
     <title>Procesar pedido</title>
 </head>
 <body>
+    <?php include 'cabecera.php'; ?>
+    
     <h1>Procesar pedido</h1>
 
     <p><?= htmlspecialchars($mensaje) ?></p>

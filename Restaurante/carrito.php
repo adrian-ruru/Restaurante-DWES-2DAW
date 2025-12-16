@@ -2,6 +2,10 @@
     //Activamos la sesión
     session_start();
 
+    //Importamos las funciones de 'sesiones.php'
+    require_once 'sesiones.php';
+    comprobar_sesion();
+
     //Importamos las funciones de la base de datos
     require_once 'bd.php';
 
@@ -42,8 +46,6 @@
 
     //Guardamos el peso total en la sesión para usarlo en procesar_pedido.php
     $_SESSION["peso_total"]= $pesoTotal;
-
-    include 'cabecera.php';
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +56,8 @@
     <title>Carrito de la compra</title>
 </head>
 <body>
+    <?php include 'cabecera.php'; ?>
+    
     <h1>Carrito de la compra</h1>
     
     <p><a href="categorias.php">Volver a categorías</a></p>

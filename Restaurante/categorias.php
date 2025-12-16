@@ -1,13 +1,13 @@
 <?php
     //Activamos la sesión
     session_start();
+
+    //Importamos las funciones de 'sesiones.php'
+    require_once 'sesiones.php';
+    comprobar_sesion();
     
     //Importamos las funciones de la base de datos
-    require_once 'bd.php';
-
-    //opcional: include 'sesiones.php'; comprobar_sesion();
-    //opcional: 
-    include 'cabecera.php';
+    require_once 'bd.php';    
 
     $categorias= obtenerCategorias();
 ?>
@@ -20,6 +20,8 @@
     <title>Categorías</title>
 </head>
 <body>
+    <?php include 'cabecera.php'; ?>
+    
     <h1>Categorías</h1>
 
     <?php if(empty($categorias)){ ?>

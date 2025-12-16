@@ -121,4 +121,26 @@
             throw $e;
         }
     }//Fin función
+
+    //Función para obtener un restaurante por su correo (login)
+    function obtenerRestaurantePorCorreo(string $correo): ?array{
+        $conexion= conectarBD();
+
+        $sql= "SELECT codRes, correo, clave FROM restaurantes WHERE correo= ?";
+        $restaurante= null;
+
+        if($stmt= $conexion -> prepare($sql)){
+            $stmt -> bind_param("s", $correo);
+            $stmt -> execute();
+            $resultado= $stmt -> get_result();
+
+            if($fila= $resultado -> fetch_assoc()){
+                $restaurante= $fila;
+            }
+            $stmt -> close();
+        }
+        $conexion -> close();
+
+        return $restaurante;
+    }//Fin función
 ?>
