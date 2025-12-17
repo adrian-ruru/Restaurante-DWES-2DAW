@@ -58,10 +58,13 @@
                 $codPedido= insertarPedido($codRestaurante, $pesoTotal, $carrito);
 
                 //Enviamos correos al restaurante y al departamento de pedidos
-                /*enviarCorreoRestaurante($codPedido);
-                  enviarCorreoDepartamentoPedidos($codPedido);
-                DESCOMENTAR EN CUANTO HAGA correo.php*/
+                $ok1= enviarCorreoRestaurante($codPedido);
+                $ok2= enviarCorreoDepartamentoPedidos($codPedido);
 
+                if($ok1 && $ok2){
+                    marcarPedidoComoEnviado($codPedido);
+                }
+                
                 //Vaciamos el carrito y el peso total
                 unset($_SESSION["carrito"]);
                 unset($_SESSION["peso_total"]);

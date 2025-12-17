@@ -2,6 +2,10 @@
     //Activamos la sesión
     session_start();
 
+    //Importamos las funciones de 'sesiones.php'
+    require_once 'sesiones.php';
+    comprobar_sesion();
+
     //Importamos las funciones de la base de datos
     require_once 'bd.php';
 

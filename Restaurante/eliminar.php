@@ -2,6 +2,10 @@
     //Activamos la sesión
     session_start();
 
+    //Importamos las funciones de 'sesiones.php'
+    require_once 'sesiones.php';
+    comprobar_sesion();
+
     //Comprobamos que la petición viene por POST
     if($_SERVER["REQUEST_METHOD"] !== "POST"){
         header("Location: carrito.php");
