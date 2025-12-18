@@ -54,56 +54,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de la compra</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-body">
     <?php include 'cabecera.php'; ?>
-    
-    <h1>Carrito de la compra</h1>
-    
-    <p><a href="categorias.php">Volver a categorías</a></p>
 
-    <?php if(empty($lineasCarrito)){ ?>
-        <p>Tu carrito está vacío.</p>
-    <?php }else{ ?>
-        <table border="1">
-            <tr>
-                <th>Producto</th>
-                <th>Descripción</th>
-                <th>Peso unitario (kg)</th>
-                <th>Unidades</th>
-                <th>Peso total (kg)</th>
-                <th>Acciones</th>
-            </tr>
+    <main class="content-container">
+        <h1 class="page-title">Carrito de la compra</h1>
 
-            <?php foreach($lineasCarrito as $linea){ ?>
-                <tr>
-                    <td><?= htmlspecialchars($linea['nombre']) ?></td>
-                    <td><?= htmlspecialchars($linea['descripcion']) ?></td>
-                    <td><?= htmlspecialchars(number_format($linea['pesoUnitario'], 2, ',', '.')) ?></td>
-                    <td><?= htmlspecialchars($linea['unidades']) ?></td>
-                    <td><?= htmlspecialchars(number_format($linea['pesoLinea'], 2, ',', '.')) ?></td>
-                    <td>
-                        <!--Formulario para eliminar unidades de este producto-->
-                        <form action="eliminar.php" method="post" style="display:inline;">
-                            <input type="hidden" name="cod" value="<?= htmlspecialchars($linea['codProd']) ?>">
-                            <input type="number" name="unidades" value="1" min="1" max="<?= htmlspecialchars($linea['unidades']) ?>">
-                            <input type="submit" value="Eliminar">
-                        </form>
-                    </td>
+        <p class="back-link"><a class="button-link" href="categorias.php">Volver a categorías</a></p>
+
+        <?php if(empty($lineasCarrito)){ ?>
+            <p class="empty-message">Tu carrito está vacío.</p>
+        <?php }else{ ?>
+            <table class="styled-table">
+                <tr class="table-row">
+                    <th class="table-header">Producto</th>
+                    <th class="table-header">Descripción</th>
+                    <th class="table-header">Peso unitario (kg)</th>
+                    <th class="table-header">Unidades</th>
+                    <th class="table-header">Peso total (kg)</th>
+                    <th class="table-header">Acciones</th>
                 </tr>
-            <?php } ?>
-        </table>
 
-        <br>
+                <?php foreach($lineasCarrito as $linea){ ?>
+                    <tr class="table-row">
+                        <td class="table-cell"><?= htmlspecialchars($linea['nombre']) ?></td>
+                        <td class="table-cell"><?= htmlspecialchars($linea['descripcion']) ?></td>
+                        <td class="table-cell"><?= htmlspecialchars(number_format($linea['pesoUnitario'], 2, ',', '.')) ?></td>
+                        <td class="table-cell"><?= htmlspecialchars($linea['unidades']) ?></td>
+                        <td class="table-cell"><?= htmlspecialchars(number_format($linea['pesoLinea'], 2, ',', '.')) ?></td>
+                        <td class="table-cell">
+                            <!--Formulario para eliminar unidades de este producto-->
+                            <form class="inline-form" action="eliminar.php" method="post">
+                                <input type="hidden" name="cod" value="<?= htmlspecialchars($linea['codProd']) ?>">
+                                <input class="number-input" type="number" name="unidades" value="1" min="1" max="<?= htmlspecialchars($linea['unidades']) ?>">
+                                <input class="secondary-button" type="submit" value="Eliminar">
+                            </form>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </table>
 
-        <p>Peso total del pedido:
-            <?= htmlspecialchars(number_format($pesoTotal, 2, ',', '.')) ?> Kg
-        </p>
+            <p class="summary-text">Peso total del pedido:
+                <strong><?= htmlspecialchars(number_format($pesoTotal, 2, ',', '.')) ?> Kg</strong>
+            </p>
 
-        <!--Formulario para confirmar el pedido-->
-        <form action="procesar_pedido.php" method="post">
-            <input type="submit" value="Confirmar pedido">
-        </form>
-    <?php } ?>
+            <!--Formulario para confirmar el pedido-->
+            <form class="confirm-form" action="procesar_pedido.php" method="post">
+                <input class="primary-button" type="submit" value="Confirmar pedido">
+            </form>
+        <?php } ?>
+    </main>
 </body>
 </html>

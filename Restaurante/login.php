@@ -50,29 +50,30 @@
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
 
-    <body>
-        <h1>Iniciar sesión</h1>
+    <body class="page-body">
+        <main class="auth-container">
+            <h1 class="page-title">Iniciar sesión</h1>
 
-        <?php if($error !== "") { ?>
-            <p style="color:red"><?= htmlspecialchars($error) ?></p>
-        <?php } ?>
+            <?php if($error !== "") { ?>
+                <p class="error-text"><?= htmlspecialchars($error) ?></p>
+            <?php } ?>
 
-        <form method="post">
-            <label>
-                Correo:
-                <input type="email" name="correo" required>
-            </label><br><br>
+            <form class="auth-form" method="post">
+                <label class="form-label">
+                    Correo:
+                    <input class="text-input" type="email" name="correo" required>
+                </label>
 
-            <label>
-                Contraseña:
-                <input type="password" name="clave" required>            
-            </label>
-            
-            <br><br>
+                <label class="form-label">
+                    Contraseña:
+                    <input class="text-input" type="password" name="clave" required>
+                </label>
 
-            <input type="submit" value="Entrar">
-        </form>
+                <input class="primary-button" type="submit" value="Entrar">
+            </form>
+        </main>
     </body>
 </html>
