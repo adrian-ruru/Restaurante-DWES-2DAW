@@ -15,16 +15,13 @@
         $fecha= $pedido["fecha"] ?? "-";
         $peso= isset($pedido["peso"]) ? (float)$pedido["peso"] : 0.0;
 
-        //Creamos el html
-        $html= "<h2>Pedido nº " . htmlspecialchars((string)$codPed) . "</h2>";
-        $html .= "<p><strong>Para:</strong> " . htmlspecialchars($destinatario) . "</p>";
-        $html .= "<p><strong>Restaurante:</strong> " . htmlspecialchars((string)$correoRest) . "</p>";
-        $html .= "<p><strong>Fecha:</strong> " . htmlspecialchars((string)$fecha) . "</p>";
-        $html .= "<p><strong>Peso total:</strong> " . htmlspecialchars(number_format($peso, 2, ",", ".")) . " kg</p>";
+        $codPedHtml= htmlspecialchars((string)$codPed);
+        $destinatarioHtml= htmlspecialchars($destinatario);
+        $correoRestHtml= htmlspecialchars((string)$correoRest);
+        $fechaHtml= htmlspecialchars((string)$fecha);
+        $pesoHtml= htmlspecialchars(number_format($peso, 2, ",", "."));
 
-        $html .= "<h3>Detalle del pedido</h3>";
-        $html .= "<table border='1' cellpadding='6' cellspacing='0'>";
-        $html .= "<tr><th>Nombre</th><th>Descripción</th><th>Peso (kg)</th><th>Unidades</th></tr>";
+        $lineasHtml= "";
 
         foreach($lineas as $l){
             $nombre= $l["nombre"] ?? "";
@@ -32,18 +29,58 @@
             $pesoProd= isset($l["peso"]) ? (float)$l["peso"] : 0.0;
             $unidades= isset($l["unidades"]) ? (int)$l["unidades"] : 0;
 
-            $html .= "<tr>";
-            $html .= "<td>" . htmlspecialchars($nombre) . "</td>";
-            $html .= "<td>" . htmlspecialchars($descripcion) . "</td>";
-            $html .= "<td style='text-align:right;'>" . htmlspecialchars(number_format($pesoProd, 2, ",", ".")) . "</td>";
-            $html .= "<td style='text-align:right;'>" . htmlspecialchars((string)$unidades) . "</td>";
-            $html .= "</tr>";
+            $pesoProdHtml= htmlspecialchars(number_format($pesoProd, 2, ",", "."));
+            $unidadesHtml= htmlspecialchars((string)$unidades);
+            $nombreHtml= htmlspecialchars($nombre);
+            $descripcionHtml= htmlspecialchars($descripcion);
+
+            $lineasHtml .= "<tr class=\"table-row\">";
+            $lineasHtml .= "<td class=\"table-cell\">{$nombreHtml}</td>";
+            $lineasHtml .= "<td class=\"table-cell\">{$descripcionHtml}</td>";
+            $lineasHtml .= "<td class=\"table-cell\">{$pesoProdHtml}</td>";
+            $lineasHtml .= "<td class=\"table-cell\">{$unidadesHtml}</td>";
+            $lineasHtml .= "</tr>";
         }//Fin foreach
 
-        $html .= "</table>";
-        $html .= "<p><em>Mensaje generado automáticamente por la aplicación.</em></p>";
+        $html= <<<HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido nº {$codPedHtml}</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="page-body">
+    <main class="content-container">
+        <h1 class="page-title">Pedido nº {$codPedHtml}</h1>
 
-        return "<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='stylesheet' href='../styles.css'></head><body>$html</body></html>";
+        <div class="summary-text">
+            <p><strong>Para:</strong> {$destinatarioHtml}</p>
+            <p><strong>Restaurante:</strong> {$correoRestHtml}</p>
+            <p><strong>Fecha:</strong> {$fechaHtml}</p>
+            <p><strong>Peso total:</strong> {$pesoHtml} kg</p>
+        </div>
+
+        <h2 class="page-title">Detalle del pedido</h2>
+
+        <table class="styled-table">
+            <tr class="table-row">
+                <th class="table-header">Nombre</th>
+                <th class="table-header">Descripción</th>
+                <th class="table-header">Peso (kg)</th>
+                <th class="table-header">Unidades</th>
+            </tr>
+            {$lineasHtml}
+        </table>
+
+        <p class="info-text"><em>Mensaje generado automáticamente por la aplicación.</em></p>
+    </main>
+</body>
+</html>
+HTML;
+
+        return $html;
     }//Fin función
 
     //Función para guardar los correos en un fichero
