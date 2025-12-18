@@ -43,7 +43,7 @@
         $html .= "</table>";
         $html .= "<p><em>Mensaje generado automáticamente por la aplicación.</em></p>";
 
-        return "<!DOCTYPE html><html><head><meta charset='UTF-8'></head><body>$html</body></html>";
+        return "<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='stylesheet' href='../styles.css'></head><body>$html</body></html>";
     }//Fin función
 
     //Función para guardar los correos en un fichero
@@ -87,5 +87,10 @@
 
         $html= construirHtmlCorreoPedido($pedido, $lineas, $destinatario);
         return guardarCorreoEnFichero("pedido_{$codPedido}_depto.html", $html);
+    }//Fin función
+
+    //Función que devuelve la ruta WEB (URL relativa) del HTML generado del restaurante
+    function obtenerUrlCorreoRestuarante(int $codPedido): string{
+        return "mails/pedido_{$codPedido}_restaurante.html";
     }//Fin función
 ?>

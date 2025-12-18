@@ -63,6 +63,10 @@
 
                 if($ok1 && $ok2){
                     marcarPedidoComoEnviado($codPedido);
+
+                    //Redirigimos al HTML generado
+                    header("Location: " . obtenerUrlCorreoRestuarante($codPedido));
+                    exit;
                 }
                 
                 //Vaciamos el carrito y el peso total
