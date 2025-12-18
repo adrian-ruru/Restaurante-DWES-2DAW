@@ -2,6 +2,10 @@
     //Activamos la sesión
     session_start();
 
+    //Importamos las funciones de 'sesiones.php'
+    require_once 'sesiones.php';
+    comprobar_sesion();
+
     //Importamos las funciones de la base de datos
     require_once 'bd.php';
 
@@ -26,6 +30,8 @@
     <title>Productos</title>
 </head>
 <body>
+    <?php include 'cabecera.php'; ?>
+    
     <h1>Productos de la categoría <?= htmlspecialchars($codCat) ?></h1>
 
     <p><a href="categorias.php">Volver a categorías</a> | <a href="carrito.php">Ver carrito</a></p>

@@ -2,6 +2,10 @@
     //Activamos la sesión
     session_start();
 
+    //Importamos las funciones de 'sesiones.php'
+    require_once 'sesiones.php';
+    comprobar_sesion();
+
     //Importamos las funciones de la base de datos
     require_once 'bd.php';
 
@@ -54,10 +58,13 @@
                 $codPedido= insertarPedido($codRestaurante, $pesoTotal, $carrito);
 
                 //Enviamos correos al restaurante y al departamento de pedidos
-                /*enviarCorreoRestaurante($codPedido);
-                  enviarCorreoDepartamentoPedidos($codPedido);
-                DESCOMENTAR EN CUANTO HAGA correo.php*/
+                $ok1= enviarCorreoRestaurante($codPedido);
+                $ok2= enviarCorreoDepartamentoPedidos($codPedido);
 
+                if($ok1 && $ok2){
+                    marcarPedidoComoEnviado($codPedido);
+                }
+                
                 //Vaciamos el carrito y el peso total
                 unset($_SESSION["carrito"]);
                 unset($_SESSION["peso_total"]);
@@ -66,7 +73,7 @@
                 $exito= true;
             }catch(Exception $e){
                 $mensaje= "Ha ocurrido un error al procesar el pedido: " . $e -> getMessage();
-                $exito= true;
+                $exito= false;
             }
         }
     }
@@ -80,6 +87,8 @@
     <title>Procesar pedido</title>
 </head>
 <body>
+    <?php include 'cabecera.php'; ?>
+    
     <h1>Procesar pedido</h1>
 
     <p><?= htmlspecialchars($mensaje) ?></p>

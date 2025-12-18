@@ -121,4 +121,99 @@
             throw $e;
         }
     }//Fin función
+
+    //Función para obtener un restaurante por su correo (login)
+    function obtenerRestaurantePorCorreo(string $correo): ?array{
+        $conexion= conectarBD();
+
+        $sql= "SELECT codRes, correo, clave FROM restaurantes WHERE correo= ?";
+        $restaurante= null;
+
+        if($stmt= $conexion -> prepare($sql)){
+            $stmt -> bind_param("s", $correo);
+            $stmt -> execute();
+            $resultado= $stmt -> get_result();
+
+            if($fila= $resultado -> fetch_assoc()){
+                $restaurante= $fila;
+            }
+            $stmt -> close();
+        }
+
+        //Cerramos la conexión
+        $conexion -> close();
+
+        return $restaurante;
+    }//Fin función
+
+    //Función para obtener un pedido con datos del restaurante para los correos
+    function obtenerPedidoParaCorreo(int $codPedido): ?array{
+        $conexion= conectarBD();
+
+        $sql= "SELECT p.codPed, p.fecha, p.peso, p.enviado, r.codRes, r.correo AS correoRestaurante
+            FROM pedidos p
+            INNER JOIN restaurantes r ON r.codRes= p.restaurante
+            WHERE p.codPed= ?";
+        
+        $pedido= null;
+
+        if($stmt= $conexion -> prepare($sql)){
+            $stmt -> bind_param("i", $codPedido);
+            $stmt -> execute();
+            $res= $stmt -> get_result();
+
+            if($fila= $res -> fetch_assoc()){
+                $pedido= $fila;
+            }
+            $stmt -> close();
+        }
+
+        //Cerramos la conexión
+        $conexion -> close();
+        return $pedido;
+    }//Fin función
+
+    //Función para obtener las líneas (productos) de un pedido para los correos
+    function obtenerLineasPedidoParaCorreo(int $codPedido): array{
+        $conexion= conectarBD();
+
+        $sql= "SELECT pr.nombre, pr.descripcion, pr.peso, pp.unidades
+            FROM pedidosproductos pp
+            INNER JOIN productos pr ON pr.codProd= pp.producto
+            WHERE pp.pedido= ?
+            ORDER BY pr.nombre";
+
+        $lineas= [];
+
+        if($stmt= $conexion -> prepare($sql)){
+            $stmt -> bind_param("i", $codPedido);
+            $stmt -> execute();
+            $res= $stmt -> get_result();
+
+            while($fila= $res -> fetch_assoc()){
+                $lineas[]= $fila;
+            }//Fin while
+            $stmt -> close();
+        }
+
+        //Cerramos la conexión
+        $conexion -> close();
+        return $lineas;
+    }//Fin función
+
+    //Función para marcar un pedido como enviado
+    function marcarPedidoComoEnviado(int $codPedido): void{
+        $conexion= conectarBD();
+
+        $sql= "UPDATE pedidos SET enviado= 1 WHERE codPed= ?";
+
+        if($stmt= $conexion -> prepare($sql)){
+            $stmt -> bind_param("i", $codPedido);
+            $stmt -> execute();
+            $stmt -> close();
+        }
+        
+        //Cerramos la conexión
+        $conexion -> close();
+    }//Fin función
 ?>
