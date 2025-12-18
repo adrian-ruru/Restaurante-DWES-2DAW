@@ -50,7 +50,11 @@
     function guardarCorreoEnFichero(string $nombreFichero, string $html): bool{
         if(!is_dir(CARPETA_MAILS)){
             //Intentamos crear la carpeta si no existe
+<<<<<<< HEAD
             if(!mkdir(CARPETA_MAILS, 0755, true) && !is_dir(CARPETA_MAILS)){
+=======
+            if(!mkdir(CARPETA_MAILS, 0777, true) && !is_dir(CARPETA_MAILS)){
+>>>>>>> b11d05e18f546a057833a676d6be6386b4b9d0c6
                 return false;
             }
         }

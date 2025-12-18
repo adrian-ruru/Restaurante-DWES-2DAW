@@ -1,4 +1,8 @@
 <?php
+<<<<<<< HEAD
+=======
+    /*require_once 'sesiones.php'; (Rubén) el chat me dice que nos puede fastidiar esta línea.*/
+>>>>>>> b11d05e18f546a057833a676d6be6386b4b9d0c6
 ?>
 
 <header>
