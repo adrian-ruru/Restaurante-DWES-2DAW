@@ -1,30 +1,30 @@
 <?php
 ?>
 
-<header>
-    <h1>Aplicación Web Restaurante</h1>
+<header class="site-header">
+    <div class="header-top">
+        <h1 class="site-title">La Casa del Capricho</h1>
 
-    <nav style="display:flex; justify-content:space-between; align-items:center;">
-        
-        <!-- Lado izquierdo -->
-        <div>
-            <?php if(isset($_SESSION["correo"])) { ?>
-                <strong>Usuario:</strong>
-                <?= htmlspecialchars($_SESSION["correo"]) ?>
-            <?php } ?>
-        </div>
+        <nav class="main-nav">
+            <div class="user-info">
+                <?php if(isset($_SESSION["correo"])) { ?>
+                    <span class="user-label">Usuario:</span>
+                    <span class="user-email"><?= htmlspecialchars($_SESSION["correo"]) ?></span>
+                <?php } ?>
+            </div>
 
-        <!-- Lado derecho -->
-        <div>
-            <a href="categorias.php">Home</a> |
-            <a href="carrito.php">Ver carrito</a>
+            <div class="nav-links">
+                <a class="nav-link" href="categorias.php">Inicio</a>
+                <a class="nav-link" href="carrito.php">Ver carrito</a>
 
-            <?php if(isset($_SESSION["codRes"])) { ?>
-                | <a href="logout.php">Cerrar sesión</a>
-            <?php }else{ ?>
-                | <a href="login.php">Iniciar sesión</a>            
-            <?php } ?>
-        </div>
-    </nav>
-    <hr>
+                <?php if(isset($_SESSION["codRes"])) { ?>
+                    <a class="nav-link" href="logout.php">Cerrar sesión</a>
+                <?php }else{ ?>
+                    <a class="nav-link" href="login.php">Iniciar sesión</a>
+                <?php } ?>
+            </div>
+        </nav>
+    </div>
+    <hr class="divider">
 </header>
+

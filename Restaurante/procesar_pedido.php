@@ -85,21 +85,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Procesar pedido</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-body">
     <?php include 'cabecera.php'; ?>
-    
-    <h1>Procesar pedido</h1>
 
-    <p><?= htmlspecialchars($mensaje) ?></p>
+    <main class="content-container">
+        <h1 class="page-title">Procesar pedido</h1>
 
-    <?php if($exito){ ?>
-        <p>Peso total del pedido: <?= htmlspecialchars(number_format($pesoTotal, 2, ',', '.')) ?> Kg</p>
-    <?php } ?>
+        <p class="info-text"><?= htmlspecialchars($mensaje) ?></p>
 
-    <p>
-        <a href="categorias.php">Volver a categorías</a> |
-        <a href="carrito.php">Ver carrito</a>
-    </p>
+        <?php if($exito){ ?>
+            <p class="summary-text">Peso total del pedido: <strong><?= htmlspecialchars(number_format($pesoTotal, 2, ',', '.')) ?> Kg</strong></p>
+        <?php } ?>
+
+        <p class="back-link">
+            <a class="button-link" href="categorias.php">Volver a categorías</a> |
+            <a class="button-link" href="carrito.php">Ver carrito</a>
+        </p>
+    </main>
 </body>
 </html>

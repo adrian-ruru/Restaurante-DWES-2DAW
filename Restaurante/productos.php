@@ -28,44 +28,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-body">
     <?php include 'cabecera.php'; ?>
-    
-    <h1>Productos de la categoría <?= htmlspecialchars($codCat) ?></h1>
 
-    <p><a href="categorias.php">Volver a categorías</a> | <a href="carrito.php">Ver carrito</a></p>
+    <main class="content-container">
+        <h1 class="page-title">Productos de la categoría <?= htmlspecialchars($codCat) ?></h1>
 
-    <?php if(empty($productos)){ ?>
-        <p>No hay productos en esta categoria.</p>
-    <?php }else { ?>
-        <table border="1">
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Peso</th>
-                <th>Stock</th>
-                <th>Añadir al carrito</th>
-            </tr>
+        <p class="back-link">
+            <a class="button-link" href="categorias.php">Volver a categorías</a> |
+            <a class="button-link" href="carrito.php">Ver carrito</a>
+        </p>
 
-            <?php foreach($productos as $producto){ ?>
-                <tr>
-                    <td><?= htmlspecialchars($producto['nombre']) ?></td>
-                    <td><?= htmlspecialchars($producto['descripcion']) ?></td>
-                    <td><?= htmlspecialchars($producto['peso']) ?> kg</td>
-                    <td><?= htmlspecialchars($producto['stock']) ?></td>
-                    <td>
-                        <form action="anadir.php" method="post">
-                            <!--Código del producto-->
-                            <input type="hidden" name="cod" value="<?= htmlspecialchars($producto['codProd']) ?>">
-                            <!--Unidades a añadir-->
-                            <input type="number" name="unidades" value="1" min="1">
-                            <input type="submit" value="Añadir">
-                        </form>
-                    </td>
+        <?php if(empty($productos)){ ?>
+            <p class="empty-message">No hay productos en esta categoria.</p>
+        <?php }else { ?>
+            <table class="styled-table">
+                <tr class="table-row">
+                    <th class="table-header">Nombre</th>
+                    <th class="table-header">Descripción</th>
+                    <th class="table-header">Peso</th>
+                    <th class="table-header">Stock</th>
+                    <th class="table-header">Añadir al carrito</th>
                 </tr>
-           <?php } ?>
-        </table>
-   <?php } ?>
+
+                <?php foreach($productos as $producto){ ?>
+                    <tr class="table-row">
+                        <td class="table-cell"><?= htmlspecialchars($producto['nombre']) ?></td>
+                        <td class="table-cell"><?= htmlspecialchars($producto['descripcion']) ?></td>
+                        <td class="table-cell"><?= htmlspecialchars($producto['peso']) ?> kg</td>
+                        <td class="table-cell"><?= htmlspecialchars($producto['stock']) ?></td>
+                        <td class="table-cell">
+                            <form class="inline-form" action="anadir.php" method="post">
+                                <!--Código del producto-->
+                                <input type="hidden" name="cod" value="<?= htmlspecialchars($producto['codProd']) ?>">
+                                <!--Unidades a añadir-->
+                                <input class="number-input" type="number" name="unidades" value="1" min="1">
+                                <input class="primary-button" type="submit" value="Añadir">
+                            </form>
+                        </td>
+                    </tr>
+               <?php } ?>
+            </table>
+       <?php } ?>
+    </main>
 </body>
 </html>
