@@ -57,9 +57,7 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 ('Fruta', 'Fresca y de temporada.'),
 ('Helados y sorbetes', 'Nuevos sabores todos los meses.'),
 ('Dulces variados', 'Galletas, caramelos, gominolas y muchas más.'),
-('Salsas y toppings', 'Siropes de caramelo, chocolate, fresa; miel, frutos secos, nata en spray...'),
-('Opciones sin azúcar', 'Productos sin azúcar.'),
-('Opciones sin gluten', 'Alternativas aptas sin gluten.');
+('Salsas y toppings', 'Siropes de caramelo, chocolate, fresa; miel, frutos secos, nata en spray...');
 
 INSERT INTO productos (nombre, descripcion, peso, stock, categoria) VALUES
 ('Té rojo', 'Infusión de té rojo, aroma intenso.', 0.10, 121, 1),
@@ -140,28 +138,6 @@ INSERT INTO productos (nombre, descripcion, peso, stock, categoria) VALUES
 ('Virutitas de arcoíris', 'Azúcar decorativo multicolor.', 0.50, 95, 7),
 ('Coco rallado', 'Coco fino para decorar.', 0.60, 70, 7),
 ('Frutos secos mixtos troceados', 'Mezcla de frutos secos listos para topping.', 1.00, 60, 7),
-
-('Chocolate negro sin azúcar', 'Tableta con edulcorante, sin azúcar añadido.', 1.00, 45, 8),
-('Bombones sin azúcar', 'Bombones variados aptos sin azúcar añadido.', 0.80, 55, 8),
-('Galletas sin azúcar', 'Galletas crujientes con edulcorantes.', 0.90, 50, 8),
-('Caramelos sin azúcar', 'Caramelos duros sin azúcar, varios sabores.', 1.00, 70, 8),
-('Gominolas sin azúcar', 'Gominolas con edulcorante, textura firme.', 1.20, 40, 8),
-('Sirope de chocolate sin azúcar', 'Salsa para dispensador sin azúcar añadido.', 1.10, 35, 8),
-('Sirope de caramelo sin azúcar', 'Caramelo con edulcorante, para helados.', 1.10, 30, 8),
-('Gelatina sin azúcar', 'Vasitos de gelatina sin azúcar, surtidos.', 1.00, 60, 8),
-('Pudding vainilla sin azúcar', 'Preparado/vasitos de pudding con edulcorante.', 1.00, 38, 8),
-('Helado vainilla sin azúcar', 'Helado con edulcorante, sabor suave.', 2.50, 18, 8),
-
-('Brownie sin gluten', 'Bites de brownie aptos sin gluten.', 0.90, 40, 9),
-('Bizcocho limón sin gluten', 'Bizcocho esponjoso apto sin gluten.', 1.20, 28, 9),
-('Cookies sin gluten', 'Galletas tipo cookie sin gluten.', 0.90, 35, 9),
-('Barquillos sin gluten', 'Conos/barquillos aptos sin gluten.', 0.80, 25, 9),
-('Granola sin gluten', 'Granola certificada sin gluten.', 1.00, 30, 9),
-('Cereal crujiente sin gluten', 'Crispies aptos sin gluten para topping.', 1.00, 32, 9),
-('Gominolas sin gluten', 'Gominolas aptas sin gluten, surtidas.', 1.30, 45, 9),
-('Tarta de queso sin gluten (mini)', 'Mini porciones de cheesecake aptas sin gluten.', 1.10, 26, 9),
-('Mix de crepe sin gluten', 'Preparado para crepes sin gluten.', 2.00, 20, 9),
-('Helado chocolate sin gluten', 'Helado apto sin gluten, base cacao.', 2.50, 16, 9);
 
 INSERT INTO pedidos (fecha, enviado, peso, restaurante) VALUES
 ('2025-12-02 08:20:00', 1, 17.50, 1),
