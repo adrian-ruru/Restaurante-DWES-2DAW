@@ -59,22 +59,22 @@
 
                 //Enviamos correos al restaurante y al departamento de pedidos
                 $ok1= enviarCorreoRestaurante($codPedido);
-                $ok2= enviarCorreoDepartamentoPedidos($codPedido);
+                //$ok2= enviarCorreoDepartamentoPedidos($codPedido);
 
-                if($ok1 && $ok2){
+                if($ok1 /*&& $ok2*/){
                     marcarPedidoComoEnviado($codPedido);
+
+                    //Vaciamos el carrito y el peso total
+                    unset($_SESSION["carrito"]);
+                    unset($_SESSION["peso_total"]);
+
+                    $mensaje= "Pedido realizado correctamente. Código de pedido: " . $codPedido;
+                    $exito= true;
 
                     //Redirigimos al HTML generado
                     header("Location: " . obtenerUrlCorreoRestuarante($codPedido));
                     exit;
-                }
-                
-                //Vaciamos el carrito y el peso total
-                unset($_SESSION["carrito"]);
-                unset($_SESSION["peso_total"]);
-
-                $mensaje= "Pedido realizado correctamente. Código de pedido: " . $codPedido;
-                $exito= true;
+                }                        
             }catch(Exception $e){
                 $mensaje= "Ha ocurrido un error al procesar el pedido: " . $e -> getMessage();
                 $exito= false;

@@ -6,20 +6,23 @@
     const CARPETA_MAILS= __DIR__ . "/mails";
 
     //"Destinatario" lógico (en modo fichero solo se usan como etiqueta)
+    const NOMBRE_RESTAURANTE_PROVEEDOR= "La Casa del Capricho";
+    const CORREO_RESTAURANTE_PROVEEDOR= "lacasadelcapricho@empresa-restaurante.local";
     const CORREO_DEPTO_PEDIDOS= "pedidos@empresa-restaurante.local";
 
     //Función para construir el html del correo del pedido
     function construirHtmlCorreoPedido(array $pedido, array $lineas, string $destinatario): string{
         $codPed= (int)$pedido["codPed"];
-        $correoRest= $pedido["correoRestaurante"] ?? "-";
+        $correoRest= $pedido["correoRestaurante"] ?? "-"; //Restaurante que hizo el pedido (BD)
         $fecha= $pedido["fecha"] ?? "-";
         $peso= isset($pedido["peso"]) ? (float)$pedido["peso"] : 0.0;
 
         $codPedHtml= htmlspecialchars((string)$codPed);
-        $destinatarioHtml= htmlspecialchars($destinatario);
-        $correoRestHtml= htmlspecialchars((string)$correoRest);
+        $destinatarioHtml= htmlspecialchars($destinatario);    
         $fechaHtml= htmlspecialchars((string)$fecha);
         $pesoHtml= htmlspecialchars(number_format($peso, 2, ",", "."));
+        $proveedorCorreoHtml= htmlspecialchars(CORREO_RESTAURANTE_PROVEEDOR);
+        $deptoHtml= htmlspecialchars(CORREO_DEPTO_PEDIDOS);
 
         $lineasHtml= "";
 
@@ -57,7 +60,8 @@
 
         <div class="summary-text">
             <p><strong>Para:</strong> {$destinatarioHtml}</p>
-            <p><strong>Restaurante:</strong> {$correoRestHtml}</p>
+            <p><strong>Restaurante:</strong> {$proveedorCorreoHtml}</p>
+            <p><strong>Departamento de pedidos:</strong> {$deptoHtml}</p>
             <p><strong>Fecha:</strong> {$fechaHtml}</p>
             <p><strong>Peso total:</strong> {$pesoHtml} kg</p>
         </div>
@@ -75,6 +79,11 @@
         </table>
 
         <p class="info-text"><em>Mensaje generado automáticamente por la aplicación.</em></p>
+
+        <div class="back-link">
+            <a class="button-link" href="../categorias.php">Volver a categorías</a>
+            <a class="button-link" href="../carrito.php">Ver carrito</a>
+        </div>
     </main>
 </body>
 </html>
@@ -109,21 +118,6 @@ HTML;
 
         $html= construirHtmlCorreoPedido($pedido, $lineas, $destinatario);
         return guardarCorreoEnFichero("pedido_{$codPedido}_restaurante.html", $html);
-    }//Fin función
-
-    //Función para enviar los correos al departamento de pedidos
-    function enviarCorreoDepartamentoPedidos(int $codPedido): bool{
-        $pedido= obtenerPedidoParaCorreo($codPedido);
-
-        if(!$pedido){
-            return false;
-        }
-
-        $lineas= obtenerLineasPedidoParaCorreo($codPedido);
-        $destinatario= CORREO_DEPTO_PEDIDOS;
-
-        $html= construirHtmlCorreoPedido($pedido, $lineas, $destinatario);
-        return guardarCorreoEnFichero("pedido_{$codPedido}_depto.html", $html);
     }//Fin función
 
     //Función que devuelve la ruta WEB (URL relativa) del HTML generado del restaurante
